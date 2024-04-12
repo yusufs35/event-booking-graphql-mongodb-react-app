@@ -1,0 +1,5 @@
+{
+    "env": {
+        "CONNECTION_STRING": "mongodb://0.0.0.0:27017/event-booking"
+    }
+}
