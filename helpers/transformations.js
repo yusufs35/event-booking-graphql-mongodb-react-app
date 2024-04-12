@@ -1,6 +1,4 @@
-/* const { getEvent } = require("../mongoose/actions/events");
-const { getUser } = require("../mongoose/actions/users");
- */ const { dateToString } = require("./date");
+const { dateToString } = require("./date");
 
 const transformEvent = (event) => {
 	return {

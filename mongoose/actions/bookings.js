@@ -5,7 +5,7 @@ const {
 } = require("../../helpers/transformations");
 const Booking = require("../models/booking");
 const { getEvent } = require("./events");
-const { getUser } = require("./users");
+const { getUserById } = require("./users");
 
 const getBookings = async () => {
 	const bookings = await Booking.find().populate("user").populate("event");
@@ -16,7 +16,7 @@ const createBooking = async (payload) => {
 	const event = await getEvent(payload.event);
 	if (!event) throw new Error("Event was not found");
 
-	const user = await getUser(payload.user);
+	const user = await getUserById(payload.user);
 	if (!user) throw new Error("User was not found");
 
 	const existingBooking = await Booking.findOne({

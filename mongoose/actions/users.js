@@ -1,4 +1,3 @@
-const bcrypt = require("bcryptjs");
 const User = require("../models/user");
 const { transformUser } = require("../../helpers/transformations");
 
@@ -7,10 +6,14 @@ const getUsers = async () => {
 	return users.map((user) => transformUser(user));
 };
 
-const getUser = async (id) => {
+const getUserById = async (id) => {
 	const user = await User.findById(id);
-	console.log("User", user)
 	return transformUser(user);
+};
+
+const getUserByEmailWithPassword = async (email) => {
+	const user = await User.findOne({ email });
+	return user;
 };
 
 const createUser = async (payload) => {
@@ -20,11 +23,15 @@ const createUser = async (payload) => {
 
 	if (existingUser) throw new Error("User is already exists");
 
-	const hashedPassword = await bcrypt.hash(payload.password, 12);
-	const user = new User({ ...payload, password: hashedPassword });
+	const user = new User({ ...payload });
 
 	const res = await user.save();
 	return transformUser(res);
 };
 
-module.exports = { getUsers, createUser, getUser };
+module.exports = {
+	getUsers,
+	createUser,
+	getUserById,
+	getUserByEmailWithPassword,
+};
